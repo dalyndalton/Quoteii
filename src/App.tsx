@@ -1,3 +1,5 @@
+import { HomePage } from "./pages/HomePage"
+
 function MyComponent() {
     return <h1>Hello world!</h1>
 }
@@ -5,8 +7,7 @@ function MyComponent() {
 export function App() {
     return (
         <div>
-            I am in the app bitches!
-            <MyComponent></MyComponent>
+            <HomePage/>
         </div>
     )
 }

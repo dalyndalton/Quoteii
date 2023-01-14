@@ -9,7 +9,13 @@ export function HomePage() {
 
   return (
     <div>
-      <SearchBar />
+      <div className="search_container">
+        <input
+          className="search_input"
+          type="text"
+          placeholder="Search"
+        ></input>
+      </div>
       <Quote body="tmp" author="tmp" />
     </div>
   );
