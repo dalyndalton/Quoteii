@@ -5,7 +5,7 @@
     transition: transform 250ms ease-in-out;
     font-size: 14px;
     line-height: 18px;
-    border-radius: 50px;
+    border-radius: 1rem;
     border: 1px solid #575756;
     transition: all 250ms ease-in-out;
     backface-visibility: hidden;
@@ -20,7 +20,7 @@
 
 .search_input:hover, 
 .search_input:focus {
-    padding: 3%x 0;
+    padding: 3% 0;
     outline: 0;
     border: 1px solid transparent;
     border-bottom: 1px solid #575756;
