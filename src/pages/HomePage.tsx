@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { Quote, IQuote } from "../components/Quote";
 import "./HomePage.css";
 
-interface APIQuote extends IQuote {
-  id: string;
+interface APIQuote {
+  _id: string;
+  author: string;
+  content: string;
+  authorSlug?: string;
+  dateAdded?: Date;
+  dateModified?: Date;
+  length?: number;
 }
 
 export function HomePage() {
@@ -14,17 +20,19 @@ export function HomePage() {
   async function randomQuote() {
     // Fetch a random quote from the Quotable API
     const response = await fetch("https://api.quotable.io/random");
-    const data = await response.json();
+    const data: APIQuote = await response.json();
     if (response.ok) {
-      // Update DOM elements
+      // update the Quotes List State
       console.log(data);
-      setQuotes([{ body: data.content, author: data.author, id: data._id }]);
+      setQuotes([
+        { content: data.content, author: data.author, _id: data._id },
+      ]);
     } else {
       setQuotes([
         {
-          body: "Cannot fetch a quote at this time",
+          content: "Cannot fetch a quote at this time",
           author: "Error: Fetch Fail",
-          id: "n/a",
+          _id: "n/a",
         },
       ]);
       console.log(data);
@@ -36,25 +44,34 @@ export function HomePage() {
     // Set the css state
     setSearchState(true);
 
+    console.log(quotes, "QUOTES");
     // Fetch the query
     const response = await fetch(
       `https://api.quotable.io/search/quotes?query=${query}&fields=author`
     );
     const data = await response.json();
     if (response.ok) {
-      // Update DOM elements
-      console.log(data);
-      setQuotes([{ body: data.content, author: data.author, id: data._id }]);
+      // Parse out each APIQuote from the API call
+      let tmp: APIQuote[] = [];
+      data.results.forEach((element: APIQuote) => {
+        tmp.push({
+          content: element.content,
+          author: element.author,
+          _id: element._id,
+        });
+      });
+
+      // Update quotes list with new values
+      setQuotes([...tmp]);
     } else {
       setQuotes([
         {
-          body: "Cannot fetch a quote at this time",
+          content: "Cannot fetch a quote at this time",
           author: "Error: Fetch Fail",
-          id: "n/a",
+          _id: "n/a",
         },
       ]);
-      console.log(data);
-      console.log("Error");
+      console.error("Error", data);
     }
   }
 
@@ -81,7 +98,7 @@ export function HomePage() {
       </div>
       <div>
         {quotes.map((quote: APIQuote) => (
-          <Quote key={quote.id} body={quote.body} author={quote.author} />
+          <Quote key={quote._id} body={quote.content} author={quote.author} />
         ))}
       </div>
     </div>

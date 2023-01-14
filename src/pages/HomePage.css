@@ -36,7 +36,7 @@
 
 .search {
     padding: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     align-self: center;
 }
