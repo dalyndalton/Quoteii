@@ -1,3 +1,4 @@
+/* I dont actually know this much CSS, I just found an example online and tweaked it until I was happy */
 .search_input {
     background-color: rgba(255, 255, 255, .15);
     backdrop-filter: blur(5px);
@@ -12,13 +13,11 @@
     backface-visibility: hidden;
     transform-style: preserve-3d;
 }
-
 .search_input::placeholder {
     color: rgba(87, 87, 86, 0.8);
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
-
 .search_input:hover, 
 .search_input:focus {
     padding: 3% 0;
