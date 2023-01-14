@@ -1,12 +1,13 @@
 .search_input {
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
     width: 100%;
     padding: 2%;
-    background-color: transparent;
     transition: transform 250ms ease-in-out;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 2rem;
+    line-height: .5rem;
     border-radius: 1rem;
-    border: 1px solid #575756;
+    border: 4px solid #575756;
     transition: all 250ms ease-in-out;
     backface-visibility: hidden;
     transform-style: preserve-3d;
@@ -22,8 +23,32 @@
 .search_input:focus {
     padding: 3% 0;
     outline: 0;
-    border: 1px solid transparent;
-    border-bottom: 1px solid #575756;
-    border-radius: 0;
+    border: .5rem solid transparent;
+    border-bottom: .5rem solid #575756;
+    border-radius: 1rem;
     background-position: 100% center;
+}
+.search_container {
+    align-self: center;
+    align-items: stretch;
+    width: 75%;
+}
+
+.search {
+    padding: 0;
+    position: absolute;
+    top: 0;
+    align-self: center;
+}
+
+.center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.center div {
+    padding: 1rem;
 }

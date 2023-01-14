@@ -1,51 +1,88 @@
 import { useEffect, useState } from "react";
 import { Quote, IQuote } from "../components/Quote";
-import { SearchBar } from "../components/Search";
-
 import "./HomePage.css";
+
+interface APIQuote extends IQuote {
+  id: string;
+}
+
 export function HomePage() {
   const [searchState, setSearchState] = useState(false);
-  const [quotes, setQuotes] = useState<IQuote[]>([]);
+  const [query, setQuery] = useState("");
+  const [quotes, setQuotes] = useState<APIQuote[]>([]);
 
-  async function updateQuote() {
+  async function randomQuote() {
     // Fetch a random quote from the Quotable API
     const response = await fetch("https://api.quotable.io/random");
     const data = await response.json();
-
     if (response.ok) {
       // Update DOM elements
       console.log(data);
-      quotes.push({
-        author: data.author,
-        body: data.content,
-      });
+      setQuotes([{ body: data.content, author: data.author, id: data._id }]);
     } else {
-      quotes.push({
-        author: "Error",
-        body: "Cannot get a quote at this time",
-      });
+      setQuotes([
+        {
+          body: "Cannot fetch a quote at this time",
+          author: "Error: Fetch Fail",
+          id: "n/a",
+        },
+      ]);
       console.log(data);
       console.log("Error");
     }
   }
 
+  async function searchQuote() {
+    // Set the css state
+    setSearchState(true);
+
+    // Fetch the query
+    const response = await fetch(
+      `https://api.quotable.io/search/quotes?query=${query}&fields=author`
+    );
+    const data = await response.json();
+    if (response.ok) {
+      // Update DOM elements
+      console.log(data);
+      setQuotes([{ body: data.content, author: data.author, id: data._id }]);
+    } else {
+      setQuotes([
+        {
+          body: "Cannot fetch a quote at this time",
+          author: "Error: Fetch Fail",
+          id: "n/a",
+        },
+      ]);
+      console.log(data);
+      console.log("Error");
+    }
+  }
+
+  // Event listener that runs on render
   useEffect(() => {
-    updateQuote();
-  });
+    randomQuote();
+  }, []);
 
   return (
-    <div>
-      <div className="search_container">
+    <div className="center">
+      <div className={`search_container ${searchState ? "search" : ""}`}>
         <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              searchQuote();
+            }
+          }}
           className="search_input"
           type="text"
           placeholder="Search"
         ></input>
       </div>
       <div>
-        {quotes.map(({ body, author }: IQuote) => {
-          return <Quote body={body} author={author} />;
-        })}
+        {quotes.map((quote: APIQuote) => (
+          <Quote key={quote.id} body={quote.body} author={quote.author} />
+        ))}
       </div>
     </div>
   );
