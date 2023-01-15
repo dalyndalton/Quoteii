@@ -85,6 +85,7 @@ export function HomePage() {
       // Switches between the centered look and a top scrollable
       style={{ justifyContent: searchState ? "center" : "start" }}
     >
+      <h1>Quote Search</h1>
       <div className={`search_container`}>
         <input
           value={query}

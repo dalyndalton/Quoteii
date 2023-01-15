@@ -2,10 +2,10 @@
 .search_input {
     background-color: rgba(255, 255, 255, .15);
     backdrop-filter: blur(5px);
-    width: 100%;
-    padding: 1.5rem;
+    width: fit-content;
+    padding: 1rem;
     transition: transform 250ms ease-in-out;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: .5rem;
     border-radius: 1rem;
     border: .25rem solid #575756;
@@ -20,7 +20,6 @@
 }
 .search_input:hover, 
 .search_input:focus {
-    padding: 1.5rem;
     outline: 0;
     border: .25rem solid transparent;
     border-bottom: .25rem solid #575756;
@@ -28,9 +27,8 @@
     background-position: 100% center;
 }
 .search_container {
-    align-self: center;
-    align-items: stretch;
-    width: 75%;
+    justify-content: center;
+    align-items: center;
 }
 
 .homepage {
