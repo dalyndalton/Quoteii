@@ -13,7 +13,7 @@ interface APIQuote {
 }
 
 export function HomePage() {
-  const [searchState, setSearchState] = useState(false);
+  const [searchState, setSearchState] = useState(true);
   const [query, setQuery] = useState("");
   const [quotes, setQuotes] = useState<APIQuote[]>([]);
 
@@ -42,9 +42,8 @@ export function HomePage() {
 
   async function searchQuote() {
     // Set the css state
-    setSearchState(true);
+    setSearchState(false);
 
-    console.log(quotes, "QUOTES");
     // Fetch the query
     const response = await fetch(
       `https://api.quotable.io/search/quotes?query=${query}&fields=author`
@@ -81,8 +80,12 @@ export function HomePage() {
   }, []);
 
   return (
-    <div className="center">
-      <div className={`search_container ${searchState ? "search" : ""}`}>
+    <div
+      className="homepage"
+      // Switches between the centered look and a top scrollable
+      style={{ justifyContent: searchState ? "center" : "start" }}
+    >
+      <div className={`search_container`}>
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -96,7 +99,7 @@ export function HomePage() {
           placeholder="Search"
         ></input>
       </div>
-      <div>
+      <div className="quote_container">
         {quotes.map((quote: APIQuote) => (
           <Quote key={quote._id} body={quote.content} author={quote.author} />
         ))}
